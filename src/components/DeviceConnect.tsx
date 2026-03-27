@@ -7,16 +7,8 @@ interface DeviceConnectProps {
 }
 
 export function DeviceConnect({ onReady, showSkip = true, onSkip }: DeviceConnectProps) {
-  const {
-    eegConnected,
-    cameraActive,
-    wasmReady,
-    connecting,
-    error,
-    connectHeadband,
-    enableCamera,
-    enableMock,
-  } = useNeuroConnection();
+  const { eegConnected, cameraActive, wasmReady, connecting, error, connectHeadband, enableCamera, enableMock } =
+    useNeuroConnection();
 
   const hasConnection = eegConnected || cameraActive;
 
@@ -26,8 +18,25 @@ export function DeviceConnect({ onReady, showSkip = true, onSkip }: DeviceConnec
         <legend>Webcam</legend>
         <p style={{ fontSize: 12, color: '#555', marginBottom: 8 }}>Heart rate and HRV via facial video analysis</p>
         {cameraActive ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--color-analysis-green)', fontWeight: 600 }}>
-            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--color-analysis-green)', display: 'inline-block' }} />
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              fontSize: 12,
+              color: 'var(--color-analysis-green)',
+              fontWeight: 600,
+            }}
+          >
+            <span
+              style={{
+                width: 8,
+                height: 8,
+                borderRadius: '50%',
+                background: 'var(--color-analysis-green)',
+                display: 'inline-block',
+              }}
+            />
             Camera connected
           </div>
         ) : (
@@ -48,8 +57,25 @@ export function DeviceConnect({ onReady, showSkip = true, onSkip }: DeviceConnec
           <legend>EEG Headband</legend>
           <p style={{ fontSize: 12, color: '#555', marginBottom: 8 }}>Brain wave analysis via Bluetooth headband</p>
           {eegConnected ? (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--color-analysis-green)', fontWeight: 600 }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--color-analysis-green)', display: 'inline-block' }} />
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 6,
+                fontSize: 12,
+                color: 'var(--color-analysis-green)',
+                fontWeight: 600,
+              }}
+            >
+              <span
+                style={{
+                  width: 8,
+                  height: 8,
+                  borderRadius: '50%',
+                  background: 'var(--color-analysis-green)',
+                  display: 'inline-block',
+                }}
+              />
               Headband connected
             </div>
           ) : (
@@ -63,7 +89,9 @@ export function DeviceConnect({ onReady, showSkip = true, onSkip }: DeviceConnec
             </button>
           )}
           {error.eeg && <p style={{ fontSize: 12, color: 'var(--color-alert)', marginTop: 6 }}>{error.eeg}</p>}
-          <p style={{ fontSize: 10, color: '#666', marginTop: 8 }}>Requires Chrome or Edge with Web Bluetooth enabled</p>
+          <p style={{ fontSize: 10, color: '#666', marginTop: 8 }}>
+            Requires Chrome or Edge with Web Bluetooth enabled
+          </p>
         </fieldset>
       )}
 

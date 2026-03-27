@@ -63,7 +63,10 @@ interface GameState {
 }
 
 function countPieces(game: Chess, color: 'w' | 'b'): number {
-  return game.board().flat().filter((sq) => sq && sq.color === color).length;
+  return game
+    .board()
+    .flat()
+    .filter((sq) => sq && sq.color === color).length;
 }
 
 interface GameActions {
@@ -97,10 +100,18 @@ function deriveStatus(game: Chess): GameState['status'] {
 }
 
 const EMPTY_NEURO: NeuroContext = {
-  calm: 0, arousal: 0, bpm: null, hrv: null,
-  alphaPower: null, betaPower: null, thetaPower: null,
-  deltaPower: null, gammaPower: null, alphaPeakFreq: null,
-  alphaBumpState: null, respirationRate: null,
+  calm: 0,
+  arousal: 0,
+  bpm: null,
+  hrv: null,
+  alphaPower: null,
+  betaPower: null,
+  thetaPower: null,
+  deltaPower: null,
+  gammaPower: null,
+  alphaPeakFreq: null,
+  alphaBumpState: null,
+  respirationRate: null,
 };
 
 export const useGameStore = create<GameStore>((set, get) => ({

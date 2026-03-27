@@ -16,20 +16,13 @@ export function SetupPage() {
           <div className="title-bar-text">Device Setup</div>
         </div>
         <div className="window-body" style={{ padding: 24 }}>
-          <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>
-            Connect Your Sensors
-          </h2>
+          <h2 style={{ fontSize: 16, fontWeight: 700, marginBottom: 8 }}>Connect Your Sensors</h2>
           <p style={{ fontSize: 12, color: '#555', marginBottom: 20, lineHeight: 1.6 }}>
-            Connect your webcam or EEG headband to track neural and physiological
-            signals during your chess game. This data powers real-time feedback
-            and post-game analysis.
+            Connect your webcam or EEG headband to track neural and physiological signals during your chess game. This
+            data powers real-time feedback and post-game analysis.
           </p>
 
-          <DeviceConnect
-            onReady={() => navigate('/play')}
-            showSkip
-            onSkip={() => navigate('/play')}
-          />
+          <DeviceConnect onReady={() => navigate('/play')} showSkip onSkip={() => navigate('/play')} />
         </div>
       </div>
     </div>

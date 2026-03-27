@@ -19,7 +19,15 @@ export function SignalQuality({ quality, size = 16, className = '' }: SignalQual
   const color = getColor(quality);
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className={className}>
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${size} ${size}`}
+      className={className}
+      role="img"
+      aria-label={`Signal quality: ${Math.round(quality * 100)}%`}
+    >
+      <title>{`Signal quality: ${Math.round(quality * 100)}%`}</title>
       {Array.from({ length: bars }).map((_, i) => {
         const height = ((i + 1) / bars) * size * 0.8;
         const x = i * (barWidth + gap);
@@ -27,6 +35,7 @@ export function SignalQuality({ quality, size = 16, className = '' }: SignalQual
         const isActive = i < activeBars;
         return (
           <rect
+            // biome-ignore lint/suspicious/noArrayIndexKey: static bar count
             key={i}
             x={x}
             y={y}

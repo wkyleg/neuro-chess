@@ -284,7 +284,7 @@ export class ElataEEGProvider {
     try {
       if (this.storedDevice?.gatt) {
         await this.storedDevice.gatt.connect();
-        await this.transport!.start();
+        await this.transport?.start();
         this.connected = true;
         this.state.connected = true;
         this.state.reconnecting = false;

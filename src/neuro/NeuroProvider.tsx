@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react';
+import { type ReactNode, useEffect } from 'react';
 import { useNeuroLoop } from './hooks';
 import { useNeuroStore } from './store';
 

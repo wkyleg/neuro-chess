@@ -22,21 +22,33 @@ export function SettingsPage() {
       {/* Menu */}
       <div
         style={{
-          display: 'flex', gap: 8,
+          display: 'flex',
+          gap: 8,
           padding: '4px 12px',
           borderBottom: '1px solid var(--color-border-dark)',
           fontSize: 13,
         }}
       >
-        <button type="button" onClick={() => navigate(-1)} style={{ padding: '4px 16px' }}>← Back</button>
-        <button type="button" onClick={() => navigate('/')} style={{ padding: '4px 16px' }}>Home</button>
+        <button type="button" onClick={() => navigate(-1)} style={{ padding: '4px 16px' }}>
+          ← Back
+        </button>
+        <button type="button" onClick={() => navigate('/')} style={{ padding: '4px 16px' }}>
+          Home
+        </button>
       </div>
 
       <div
         style={{
-          flex: 1, overflow: 'auto', padding: 24,
-          display: 'flex', flexDirection: 'column', alignItems: 'center',
-          gap: 16, maxWidth: 600, margin: '0 auto', width: '100%',
+          flex: 1,
+          overflow: 'auto',
+          padding: 24,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 16,
+          maxWidth: 600,
+          margin: '0 auto',
+          width: '100%',
         }}
       >
         {/* Difficulty */}
@@ -54,7 +66,9 @@ export function SettingsPage() {
                     type="button"
                     onClick={() => setDifficulty(d.value)}
                     style={{
-                      padding: '6px 20px', fontSize: 13, cursor: 'pointer',
+                      padding: '6px 20px',
+                      fontSize: 13,
+                      cursor: 'pointer',
                       fontWeight: difficulty === d.value ? 700 : 400,
                       background: difficulty === d.value ? 'var(--color-accent)' : undefined,
                       color: difficulty === d.value ? '#fff' : undefined,
@@ -64,9 +78,7 @@ export function SettingsPage() {
                   </button>
                 ))}
               </div>
-              <p style={{ fontSize: 11, color: '#666', marginTop: 4 }}>
-                Powered by Stockfish 16 chess engine.
-              </p>
+              <p style={{ fontSize: 11, color: '#666', marginTop: 4 }}>Powered by Stockfish 16 chess engine.</p>
             </fieldset>
           </div>
         </div>
@@ -84,7 +96,9 @@ export function SettingsPage() {
                   type="button"
                   onClick={() => disableMock()}
                   style={{
-                    padding: '6px 20px', fontSize: 13, cursor: 'pointer',
+                    padding: '6px 20px',
+                    fontSize: 13,
+                    cursor: 'pointer',
                     fontWeight: !mockEnabled ? 700 : 400,
                     background: !mockEnabled ? 'var(--color-accent)' : undefined,
                     color: !mockEnabled ? '#fff' : undefined,
@@ -96,7 +110,9 @@ export function SettingsPage() {
                   type="button"
                   onClick={() => enableMock()}
                   style={{
-                    padding: '6px 20px', fontSize: 13, cursor: 'pointer',
+                    padding: '6px 20px',
+                    fontSize: 13,
+                    cursor: 'pointer',
                     fontWeight: mockEnabled ? 700 : 400,
                     background: mockEnabled ? 'var(--color-accent)' : undefined,
                     color: mockEnabled ? '#fff' : undefined,

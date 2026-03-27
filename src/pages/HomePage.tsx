@@ -35,11 +35,11 @@ export function HomePage() {
           <p
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: 12,
-              color: '#555',
+              fontSize: 13,
+              color: '#444',
               lineHeight: 1.7,
               marginBottom: 32,
-              maxWidth: 360,
+              maxWidth: 380,
               marginLeft: 'auto',
               marginRight: 'auto',
             }}

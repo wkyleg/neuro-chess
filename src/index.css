@@ -1,18 +1,18 @@
-@import 'tailwindcss';
-@import '98.css/dist/98.css';
+@import "tailwindcss";
+@import "98.css/dist/98.css";
 
 :root {
-  --color-shell: #C8C0B0;
-  --color-panel: #D4CFC4;
-  --color-border-light: #E0DDD4;
-  --color-border-dark: #6B7D6B;
-  --color-accent: #2D5A3D;
-  --color-analysis-green: #2D5A3D;
-  --color-amber: #8B6914;
-  --color-alert: #8B1A1A;
-  --color-text: #1A1A18;
-  --color-rack-gray: #7A8A7A;
-  --color-meter-bg: #3A4A3A;
+  --color-shell: #c8c0b0;
+  --color-panel: #d4cfc4;
+  --color-border-light: #e0ddd4;
+  --color-border-dark: #6b7d6b;
+  --color-accent: #2d5a3d;
+  --color-analysis-green: #2d5a3d;
+  --color-amber: #8b6914;
+  --color-alert: #8b1a1a;
+  --color-text: #1a1a18;
+  --color-rack-gray: #7a8a7a;
+  --color-meter-bg: #3a4a3a;
 }
 
 @layer base {
@@ -22,7 +22,7 @@
   }
 
   body {
-    font-family: 'IBM Plex Mono', 'Segoe UI', Tahoma, sans-serif;
+    font-family: "IBM Plex Mono", "Segoe UI", Tahoma, sans-serif;
     background: var(--color-shell);
     color: var(--color-text);
     min-height: 100vh;

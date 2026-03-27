@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Chessboard } from 'react-chessboard';
 import { useNavigate } from 'react-router';
+import { MusicPlayer } from '../components/MusicPlayer';
 import { SignalQuality } from '../components/SignalQuality';
-import { useGameStore } from '../lib/gameStore';
 import type { NeuroContext } from '../lib/gameStore';
+import { useGameStore } from '../lib/gameStore';
 import { getBestMove } from '../lib/stockfishEngine';
 import { useNeuroSignals, useNeuroStore } from '../neuro/hooks';
 import type { NeuroManager } from '../neuro/neuroManager';
-import { MusicPlayer } from '../components/MusicPlayer';
 
 function formatTime(ts: number) {
   const d = new Date(ts);
@@ -81,7 +81,7 @@ export function PlayPage() {
     if (!el) return;
     const obs = new ResizeObserver((entries) => {
       for (const entry of entries) {
-        const w = Math.min(entry.contentRect.width - 16, entry.contentRect.height - 16, 560);
+        const w = Math.min(entry.contentRect.width - 8, entry.contentRect.height - 8, 680);
         setBoardWidth(Math.max(280, w));
       }
     });
@@ -89,11 +89,12 @@ export function PlayPage() {
     return () => obs.disconnect();
   }, []);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: moves.length triggers scroll on new moves
   useEffect(() => {
     moveLogRef.current?.scrollTo({ top: moveLogRef.current.scrollHeight, behavior: 'smooth' });
   }, [moves.length]);
 
-  // Webcam video element
+  // biome-ignore lint/correctness/useExhaustiveDependencies: cameraActive triggers video element re-attach
   useEffect(() => {
     const container = videoContainerRef.current;
     if (!container || !manager) return;
@@ -237,47 +238,77 @@ export function PlayPage() {
       {gameOverCountdown !== null && (
         <div
           style={{
-            position: 'fixed', inset: 0, zIndex: 100,
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            background: 'rgba(0,0,0,0.6)', color: '#fff',
+            position: 'fixed',
+            inset: 0,
+            zIndex: 100,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            background: 'rgba(0,0,0,0.6)',
+            color: '#fff',
           }}
         >
           <div style={{ fontSize: 28, fontWeight: 700, marginBottom: 8, textTransform: 'uppercase' }}>
-            {status === 'checkmate' ? (game.turn() === 'w' ? 'Black Wins' : 'White Wins') : status === 'stalemate' ? 'Stalemate' : 'Draw'}
+            {status === 'checkmate'
+              ? game.turn() === 'w'
+                ? 'Black Wins'
+                : 'White Wins'
+              : status === 'stalemate'
+                ? 'Stalemate'
+                : 'Draw'}
           </div>
-          <div style={{ fontSize: 14, opacity: 0.7 }}>
-            Redirecting to analysis in {gameOverCountdown}...
-          </div>
+          <div style={{ fontSize: 14, opacity: 0.7 }}>Redirecting to analysis in {gameOverCountdown}...</div>
         </div>
       )}
 
       {/* Top menu bar */}
       <div
         style={{
-          display: 'flex', alignItems: 'center', gap: 8,
-          padding: '4px 12px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 8,
+          padding: '6px 16px',
           borderBottom: '1px solid var(--color-border-dark)',
           background: 'var(--color-shell)',
           fontSize: 13,
         }}
       >
-        <button type="button" onClick={() => navigate('/')}>File</button>
-        <button type="button" onClick={handleNewGame}>New Game</button>
-        {isGameOver && <button type="button" onClick={handleAnalysis}>View Analysis</button>}
+        <button type="button" onClick={() => navigate('/')}>
+          File
+        </button>
+        <button type="button" onClick={handleNewGame}>
+          New Game
+        </button>
+        {isGameOver && (
+          <button type="button" onClick={handleAnalysis}>
+            View Analysis
+          </button>
+        )}
       </div>
 
       {/* Main content: board + right panel */}
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden', minHeight: 0 }}>
         {/* Left: Chess board */}
-        <div style={{ flex: '1 1 60%', display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-          <div className="window" style={{ margin: 8, flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: '1 1 65%', display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+          <div
+            className="window"
+            style={{ margin: '4px 4px 4px 8px', flex: 1, display: 'flex', flexDirection: 'column' }}
+          >
             <div className="title-bar">
               <div className="title-bar-text">Board — {statusText}</div>
             </div>
             <div
               ref={boardContainerRef}
               className="window-body"
-              style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 8, overflow: 'hidden' }}
+              style={{
+                flex: 1,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 4,
+                overflow: 'hidden',
+              }}
             >
               <Chessboard
                 id="mainBoard"
@@ -294,20 +325,31 @@ export function PlayPage() {
         </div>
 
         {/* Right: Tabbed panel */}
-        <div style={{ flex: '0 0 300px', display: 'flex', flexDirection: 'column', margin: '8px 8px 8px 0' }}>
+        <div style={{ flex: '0 0 260px', display: 'flex', flexDirection: 'column', margin: '4px 8px 4px 4px' }}>
           <div className="window" style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
             {/* Tab bar */}
-            <div style={{ display: 'flex', borderBottom: '1px solid var(--color-border-dark)', background: 'var(--color-panel)' }}>
+            <div
+              style={{
+                display: 'flex',
+                borderBottom: '1px solid var(--color-border-dark)',
+                background: 'var(--color-panel)',
+              }}
+            >
               {(['moves', 'game', 'music'] as TabId[]).map((tab) => (
                 <button
                   key={tab}
                   type="button"
                   onClick={() => setActiveTab(tab)}
                   style={{
-                    flex: 1, padding: '6px 8px', fontSize: 11, fontWeight: activeTab === tab ? 700 : 400,
+                    flex: 1,
+                    padding: '6px 8px',
+                    fontSize: 11,
+                    fontWeight: activeTab === tab ? 700 : 400,
                     background: activeTab === tab ? 'var(--color-shell)' : 'transparent',
-                    border: 'none', borderBottom: activeTab === tab ? '2px solid var(--color-accent)' : '2px solid transparent',
-                    cursor: 'pointer', textTransform: 'capitalize',
+                    border: 'none',
+                    borderBottom: activeTab === tab ? '2px solid var(--color-accent)' : '2px solid transparent',
+                    cursor: 'pointer',
+                    textTransform: 'capitalize',
                   }}
                 >
                   {tab}
@@ -320,24 +362,32 @@ export function PlayPage() {
               {activeTab === 'moves' && (
                 <div ref={moveLogRef} style={{ padding: 0, fontSize: 11 }}>
                   {moves.length === 0 ? (
-                    <div style={{ color: '#999', padding: 16 }}>No moves yet.</div>
+                    <div style={{ color: '#999', padding: '16px 20px' }}>No moves yet.</div>
                   ) : (
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
                       <thead>
-                        <tr style={{ borderBottom: '1px solid #ccc', textAlign: 'left', position: 'sticky', top: 0, background: 'var(--color-panel)' }}>
-                          <th style={{ padding: '4px 8px', width: 30 }}>#</th>
-                          <th style={{ padding: '4px 8px' }}>Move</th>
-                          <th style={{ padding: '4px 8px' }}>Time</th>
-                          <th style={{ padding: '4px 8px' }}>Calm</th>
+                        <tr
+                          style={{
+                            borderBottom: '1px solid #ccc',
+                            textAlign: 'left',
+                            position: 'sticky',
+                            top: 0,
+                            background: 'var(--color-panel)',
+                          }}
+                        >
+                          <th style={{ padding: '6px 10px', width: 30 }}>#</th>
+                          <th style={{ padding: '6px 10px' }}>Move</th>
+                          <th style={{ padding: '6px 10px' }}>Time</th>
+                          <th style={{ padding: '6px 10px' }}>Calm</th>
                         </tr>
                       </thead>
                       <tbody>
                         {moves.map((m, i) => (
                           <tr key={m.time} style={{ borderBottom: '1px solid #eee' }}>
-                            <td style={{ padding: '4px 8px', color: '#999' }}>{i + 1}</td>
-                            <td style={{ padding: '4px 8px', fontWeight: 600 }}>{m.san}</td>
-                            <td style={{ padding: '4px 8px', color: '#888' }}>{formatTime(m.time)}</td>
-                            <td style={{ padding: '4px 8px', color: m.side === 'w' ? calmColor(m.calm) : '#ccc' }}>
+                            <td style={{ padding: '5px 10px', color: '#999' }}>{i + 1}</td>
+                            <td style={{ padding: '5px 10px', fontWeight: 600 }}>{m.san}</td>
+                            <td style={{ padding: '5px 10px', color: '#888' }}>{formatTime(m.time)}</td>
+                            <td style={{ padding: '5px 10px', color: m.side === 'w' ? calmColor(m.calm) : '#ccc' }}>
                               {m.side === 'w' ? calmLabel(m.calm) : '—'}
                             </td>
                           </tr>
@@ -349,19 +399,43 @@ export function PlayPage() {
               )}
 
               {activeTab === 'game' && (
-                <div style={{ padding: 16, fontSize: 12 }}>
+                <div style={{ padding: '16px 20px', fontSize: 12 }}>
                   <table style={{ width: '100%' }}>
                     <tbody>
-                      <tr><td style={{ color: '#888', padding: '4px 0' }}>White</td><td style={{ fontWeight: 600 }}>You</td></tr>
-                      <tr><td style={{ color: '#888', padding: '4px 0' }}>Black</td><td style={{ fontWeight: 600 }}>Computer (Random)</td></tr>
-                      <tr><td style={{ color: '#888', padding: '4px 0' }}>Moves</td><td>{moves.length}</td></tr>
-                      <tr><td style={{ color: '#888', padding: '4px 0' }}>Status</td><td>{statusText}</td></tr>
+                      <tr>
+                        <td style={{ color: '#888', padding: '4px 0' }}>White</td>
+                        <td style={{ fontWeight: 600 }}>You</td>
+                      </tr>
+                      <tr>
+                        <td style={{ color: '#888', padding: '4px 0' }}>Black</td>
+                        <td style={{ fontWeight: 600 }}>Computer (Stockfish)</td>
+                      </tr>
+                      <tr>
+                        <td style={{ color: '#888', padding: '4px 0' }}>Moves</td>
+                        <td>{moves.length}</td>
+                      </tr>
+                      <tr>
+                        <td style={{ color: '#888', padding: '4px 0' }}>Status</td>
+                        <td>{statusText}</td>
+                      </tr>
                     </tbody>
                   </table>
                   <div style={{ marginTop: 16, display: 'flex', gap: 8, flexDirection: 'column' }}>
-                    <button type="button" onClick={handleNewGame} style={{ fontSize: 12, width: '100%', padding: '4px 16px' }}>New Game</button>
+                    <button
+                      type="button"
+                      onClick={handleNewGame}
+                      style={{ fontSize: 12, width: '100%', padding: '4px 16px' }}
+                    >
+                      New Game
+                    </button>
                     {isGameOver && (
-                      <button type="button" onClick={handleAnalysis} style={{ fontSize: 12, width: '100%', padding: '4px 16px' }}>View Analysis</button>
+                      <button
+                        type="button"
+                        onClick={handleAnalysis}
+                        style={{ fontSize: 12, width: '100%', padding: '4px 16px' }}
+                      >
+                        View Analysis
+                      </button>
                     )}
                   </div>
                 </div>
@@ -374,17 +448,19 @@ export function PlayPage() {
       </div>
 
       {/* Bottom Neuro HUD */}
-      <div
-        className="window"
-        style={{ margin: '0 8px 0', borderTop: '2px solid var(--color-border-dark)' }}
-      >
-        <div style={{ display: 'flex', alignItems: 'stretch', padding: '8px 16px', gap: 24, fontSize: 11, minHeight: 80 }}>
+      <div className="window" style={{ margin: '0 8px 0', borderTop: '2px solid var(--color-border-dark)' }}>
+        <div
+          style={{ display: 'flex', alignItems: 'stretch', padding: '8px 16px', gap: 24, fontSize: 11, minHeight: 80 }}
+        >
           {/* Left: Webcam + source */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
             <div
               ref={videoContainerRef}
               style={{
-                width: 80, height: 60, overflow: 'hidden', borderRadius: 2,
+                width: 80,
+                height: 60,
+                overflow: 'hidden',
+                borderRadius: 2,
                 border: neuro.cameraActive ? '1px solid var(--color-border-dark)' : 'none',
                 background: neuro.cameraActive ? '#222' : 'transparent',
                 visibility: neuro.cameraActive ? 'visible' : 'hidden',
@@ -394,8 +470,15 @@ export function PlayPage() {
               <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
                 <div
                   style={{
-                    width: 6, height: 6, borderRadius: '50%',
-                    background: neuro.signalQuality > 0.6 ? 'var(--color-analysis-green)' : neuro.signalQuality > 0.3 ? 'var(--color-amber)' : 'var(--color-alert)',
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    background:
+                      neuro.signalQuality > 0.6
+                        ? 'var(--color-analysis-green)'
+                        : neuro.signalQuality > 0.3
+                          ? 'var(--color-amber)'
+                          : 'var(--color-alert)',
                   }}
                 />
                 <span style={{ fontSize: 10, color: '#888', textTransform: 'uppercase' }}>
@@ -408,22 +491,41 @@ export function PlayPage() {
           {/* Center: EEG bands or calm/arousal */}
           <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', gap: 2 }}>
             {neuro.eegConnected && neuro.alphaPower !== null ? (
-              <>
-                <div style={{ display: 'flex', gap: 8 }}>
-                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    <BandBar label="Delta" value={neuro.deltaPower} />
-                    <BandBar label="Theta" value={neuro.thetaPower} />
-                    <BandBar label="Alpha" value={neuro.alphaPower} />
-                    <BandBar label="Beta" value={neuro.betaPower} />
-                    <BandBar label="Gamma" value={neuro.gammaPower} />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: 2, fontSize: 10, color: '#888', minWidth: 100 }}>
-                    {neuro.calmnessState && <div>State: <span style={{ color: 'var(--color-text)' }}>{neuro.calmnessState}</span></div>}
-                    {neuro.alphaPeakFreq !== null && <div>Alpha Pk: <span style={{ color: 'var(--color-text)' }}>{neuro.alphaPeakFreq.toFixed(1)}Hz</span></div>}
-                    {neuro.alphaBumpState && neuro.alphaBumpState !== 'unknown' && <div>Alpha: <span style={{ color: 'var(--color-text)' }}>{neuro.alphaBumpState}</span></div>}
-                  </div>
+              <div style={{ display: 'flex', gap: 8 }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <BandBar label="Delta" value={neuro.deltaPower} />
+                  <BandBar label="Theta" value={neuro.thetaPower} />
+                  <BandBar label="Alpha" value={neuro.alphaPower} />
+                  <BandBar label="Beta" value={neuro.betaPower} />
+                  <BandBar label="Gamma" value={neuro.gammaPower} />
                 </div>
-              </>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 2,
+                    fontSize: 10,
+                    color: '#888',
+                    minWidth: 100,
+                  }}
+                >
+                  {neuro.calmnessState && (
+                    <div>
+                      State: <span style={{ color: 'var(--color-text)' }}>{neuro.calmnessState}</span>
+                    </div>
+                  )}
+                  {neuro.alphaPeakFreq !== null && (
+                    <div>
+                      Alpha Pk: <span style={{ color: 'var(--color-text)' }}>{neuro.alphaPeakFreq.toFixed(1)}Hz</span>
+                    </div>
+                  )}
+                  {neuro.alphaBumpState && neuro.alphaBumpState !== 'unknown' && (
+                    <div>
+                      Alpha: <span style={{ color: 'var(--color-text)' }}>{neuro.alphaBumpState}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             ) : (
               <div style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
                 <div>
@@ -437,10 +539,24 @@ export function PlayPage() {
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ height: 4, background: '#ddd', borderRadius: 2, overflow: 'hidden', marginBottom: 4 }}>
-                    <div style={{ height: '100%', width: `${calmPct}%`, background: calmColor(neuro.calm), transition: 'width 0.3s' }} />
+                    <div
+                      style={{
+                        height: '100%',
+                        width: `${calmPct}%`,
+                        background: calmColor(neuro.calm),
+                        transition: 'width 0.3s',
+                      }}
+                    />
                   </div>
                   <div style={{ height: 4, background: '#ddd', borderRadius: 2, overflow: 'hidden' }}>
-                    <div style={{ height: '100%', width: `${arousalPct}%`, background: 'var(--color-amber)', transition: 'width 0.3s' }} />
+                    <div
+                      style={{
+                        height: '100%',
+                        width: `${arousalPct}%`,
+                        background: 'var(--color-amber)',
+                        transition: 'width 0.3s',
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -477,15 +593,32 @@ export function PlayPage() {
       {/* Status bar */}
       <div
         style={{
-          display: 'flex', gap: 2, padding: 0,
+          display: 'flex',
+          gap: 2,
+          padding: 0,
           borderTop: '1px solid var(--color-border-dark)',
-          fontSize: 11, background: 'var(--color-shell)',
+          fontSize: 11,
+          background: 'var(--color-shell)',
         }}
       >
-        <div style={{ flex: 1, padding: '3px 12px', borderRight: '1px solid #aaa', boxShadow: 'inset -1px -1px #fff, inset 1px 1px grey' }}>
+        <div
+          style={{
+            flex: 1,
+            padding: '3px 12px',
+            borderRight: '1px solid #aaa',
+            boxShadow: 'inset -1px -1px #fff, inset 1px 1px grey',
+          }}
+        >
           {statusText}
         </div>
-        <div style={{ padding: '3px 12px', minWidth: 100, borderRight: '1px solid #aaa', boxShadow: 'inset -1px -1px #fff, inset 1px 1px grey' }}>
+        <div
+          style={{
+            padding: '3px 12px',
+            minWidth: 100,
+            borderRight: '1px solid #aaa',
+            boxShadow: 'inset -1px -1px #fff, inset 1px 1px grey',
+          }}
+        >
           Moves: {moves.length}
         </div>
         <div style={{ padding: '3px 12px', minWidth: 140, boxShadow: 'inset -1px -1px #fff, inset 1px 1px grey' }}>
