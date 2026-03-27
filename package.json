@@ -1,0 +1,50 @@
+{
+  "name": "neuro-chess",
+  "version": "1.0.0",
+  "description": "Composure-tracking chess trainer with neuro-physiological analysis",
+  "type": "module",
+  "packageManager": "pnpm@8.9.2",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "typecheck": "tsc --noEmit",
+    "format": "biome format --write .",
+    "check": "biome check --write .",
+    "lint": "biome check ."
+  },
+  "author": "Elata",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.8",
+    "@tailwindcss/vite": "^4.1.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.3.0",
+    "jsdom": "^26.0.0",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.0.7",
+    "vite-plugin-top-level-await": "^1.6.0",
+    "vite-plugin-wasm": "^3.6.0",
+    "vitest": "^2.1.8"
+  },
+  "dependencies": {
+    "@elata-biosciences/eeg-web": "^0.1.5",
+    "@elata-biosciences/eeg-web-ble": "^0.1.5",
+    "@elata-biosciences/rppg-web": "^0.1.5",
+    "98.css": "^0.1.18",
+    "chess.js": "^1.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router": "^7.1.0",
+    "react-chessboard": "^4.7.0",
+    "recharts": "^2.15.0",
+    "stockfish": "^16.0.0",
+    "zustand": "^5.0.0"
+  }
+}

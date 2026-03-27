@@ -1,0 +1,31 @@
+@import 'tailwindcss';
+@import '98.css';
+
+:root {
+  --color-shell: #C0C0C0;
+  --color-panel: #FFFFFF;
+  --color-border-light: #FFFFFF;
+  --color-border-dark: #808080;
+  --color-accent: #000080;
+  --color-analysis-green: #2F6B3C;
+  --color-amber: #A16207;
+  --color-alert: #7F1D1D;
+  --color-text: #111111;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'IBM Plex Mono', 'Segoe UI', Tahoma, sans-serif;
+  background: var(--color-shell);
+  color: var(--color-text);
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
