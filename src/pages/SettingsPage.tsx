@@ -47,21 +47,25 @@ export function SettingsPage() {
           <div className="window-body" style={{ padding: 20 }}>
             <fieldset style={{ padding: '12px 16px' }}>
               <legend>Computer opponent strength</legend>
-              <div style={{ display: 'flex', gap: 16, padding: '12px 0' }}>
+              <div style={{ display: 'flex', gap: 8, padding: '12px 0' }}>
                 {DIFFICULTIES.map((d) => (
-                  <label key={d.value} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer', padding: '4px 0' }}>
-                    <input
-                      type="radio"
-                      name="difficulty"
-                      checked={difficulty === d.value}
-                      onChange={() => setDifficulty(d.value)}
-                    />
+                  <button
+                    key={d.value}
+                    type="button"
+                    onClick={() => setDifficulty(d.value)}
+                    style={{
+                      padding: '6px 20px', fontSize: 13, cursor: 'pointer',
+                      fontWeight: difficulty === d.value ? 700 : 400,
+                      background: difficulty === d.value ? 'var(--color-accent)' : undefined,
+                      color: difficulty === d.value ? '#fff' : undefined,
+                    }}
+                  >
                     {d.label}
-                  </label>
+                  </button>
                 ))}
               </div>
-              <p style={{ fontSize: 11, color: '#888', marginTop: 4 }}>
-                Currently uses random move engine. Stockfish integration coming soon.
+              <p style={{ fontSize: 11, color: '#666', marginTop: 4 }}>
+                Powered by Stockfish 16 chess engine.
               </p>
             </fieldset>
           </div>
@@ -75,15 +79,31 @@ export function SettingsPage() {
           <div className="window-body" style={{ padding: 20 }}>
             <fieldset style={{ padding: '12px 16px' }}>
               <legend>Mock / Live signals</legend>
-              <div style={{ display: 'flex', gap: 16, padding: '12px 0' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer', padding: '4px 0' }}>
-                  <input type="radio" name="signalMode" checked={!mockEnabled} onChange={() => disableMock()} />
+              <div style={{ display: 'flex', gap: 8, padding: '12px 0' }}>
+                <button
+                  type="button"
+                  onClick={() => disableMock()}
+                  style={{
+                    padding: '6px 20px', fontSize: 13, cursor: 'pointer',
+                    fontWeight: !mockEnabled ? 700 : 400,
+                    background: !mockEnabled ? 'var(--color-accent)' : undefined,
+                    color: !mockEnabled ? '#fff' : undefined,
+                  }}
+                >
                   Live (Device)
-                </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer', padding: '4px 0' }}>
-                  <input type="radio" name="signalMode" checked={mockEnabled} onChange={() => enableMock()} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => enableMock()}
+                  style={{
+                    padding: '6px 20px', fontSize: 13, cursor: 'pointer',
+                    fontWeight: mockEnabled ? 700 : 400,
+                    background: mockEnabled ? 'var(--color-accent)' : undefined,
+                    color: mockEnabled ? '#fff' : undefined,
+                  }}
+                >
                   Simulated (Mock)
-                </label>
+                </button>
               </div>
             </fieldset>
           </div>

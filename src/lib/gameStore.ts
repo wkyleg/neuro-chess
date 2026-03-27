@@ -68,7 +68,7 @@ function countPieces(game: Chess, color: 'w' | 'b'): number {
 
 interface GameActions {
   makeMove: (from: string, to: string, neuro: NeuroContext) => boolean;
-  computerMove: () => void;
+  computerMove: (engineMove?: { from: string; to: string; promotion?: string }) => void;
   addNeuroSnapshot: (neuro: NeuroContext) => void;
   reset: () => void;
   setDifficulty: (d: GameState['difficulty']) => void;
@@ -153,11 +153,11 @@ export const useGameStore = create<GameStore>((set, get) => ({
     }
   },
 
-  computerMove: () => {
+  computerMove: (engineMove?: { from: string; to: string; promotion?: string }) => {
     const { game } = get();
     if (game.isGameOver() || game.turn() !== 'b') return;
 
-    const move = pickRandomMove(game);
+    const move = engineMove ?? pickRandomMove(game);
     if (!move) return;
 
     const result = game.move(move);

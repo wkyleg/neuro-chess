@@ -24,7 +24,7 @@ export function DeviceConnect({ onReady, showSkip = true, onSkip }: DeviceConnec
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <fieldset style={{ padding: '12px 16px' }}>
         <legend>Webcam</legend>
-        <p style={{ fontSize: 12, color: '#888', marginBottom: 8 }}>Heart rate and HRV via facial video analysis</p>
+        <p style={{ fontSize: 12, color: '#555', marginBottom: 8 }}>Heart rate and HRV via facial video analysis</p>
         {cameraActive ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--color-analysis-green)', fontWeight: 600 }}>
             <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--color-analysis-green)', display: 'inline-block' }} />
@@ -46,7 +46,7 @@ export function DeviceConnect({ onReady, showSkip = true, onSkip }: DeviceConnec
       {wasmReady && (
         <fieldset style={{ padding: '12px 16px' }}>
           <legend>EEG Headband</legend>
-          <p style={{ fontSize: 12, color: '#888', marginBottom: 8 }}>Brain wave analysis via Bluetooth headband</p>
+          <p style={{ fontSize: 12, color: '#555', marginBottom: 8 }}>Brain wave analysis via Bluetooth headband</p>
           {eegConnected ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: 'var(--color-analysis-green)', fontWeight: 600 }}>
               <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--color-analysis-green)', display: 'inline-block' }} />
@@ -63,7 +63,7 @@ export function DeviceConnect({ onReady, showSkip = true, onSkip }: DeviceConnec
             </button>
           )}
           {error.eeg && <p style={{ fontSize: 12, color: 'var(--color-alert)', marginTop: 6 }}>{error.eeg}</p>}
-          <p style={{ fontSize: 10, color: '#888', marginTop: 8 }}>Requires Chrome or Edge with Web Bluetooth enabled</p>
+          <p style={{ fontSize: 10, color: '#666', marginTop: 8 }}>Requires Chrome or Edge with Web Bluetooth enabled</p>
         </fieldset>
       )}
 

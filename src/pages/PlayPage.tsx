@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import { SignalQuality } from '../components/SignalQuality';
 import { useGameStore } from '../lib/gameStore';
 import type { NeuroContext } from '../lib/gameStore';
+import { getBestMove } from '../lib/stockfishEngine';
 import { useNeuroSignals, useNeuroStore } from '../neuro/hooks';
 import type { NeuroManager } from '../neuro/neuroManager';
 import { MusicPlayer } from '../components/MusicPlayer';
@@ -177,17 +178,24 @@ export function PlayPage() {
     };
   }, []);
 
+  const difficulty = useGameStore((s) => s.difficulty);
+
   const onDrop = useCallback(
     (sourceSquare: string, targetSquare: string) => {
       if (isGameOver || turn !== 'w') return false;
       const ctx = buildNeuroContext();
       const ok = makeMove(sourceSquare, targetSquare, ctx);
       if (ok) {
-        setTimeout(() => computerMove(), 400);
+        const currentGame = useGameStore.getState().game;
+        if (!currentGame.isGameOver()) {
+          getBestMove(currentGame.fen(), difficulty)
+            .then((engineMove) => computerMove(engineMove))
+            .catch(() => computerMove());
+        }
       }
       return ok;
     },
-    [isGameOver, turn, makeMove, computerMove, buildNeuroContext],
+    [isGameOver, turn, makeMove, computerMove, buildNeuroContext, difficulty],
   );
 
   const handleNewGame = () => {

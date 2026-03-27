@@ -13,18 +13,6 @@ export function HomePage() {
           <div className="title-bar-text">Chess Analyzer v1.0</div>
         </div>
         <div className="window-body" style={{ padding: 32, textAlign: 'center' }}>
-          <div
-            style={{
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: 11,
-              color: 'var(--color-accent)',
-              letterSpacing: 3,
-              marginBottom: 8,
-              textTransform: 'uppercase',
-            }}
-          >
-            Elata Biosciences
-          </div>
           <h1
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
@@ -48,21 +36,21 @@ export function HomePage() {
             style={{
               fontFamily: "'IBM Plex Mono', monospace",
               fontSize: 12,
-              color: '#666',
+              color: '#555',
               lineHeight: 1.7,
               marginBottom: 32,
-              maxWidth: 340,
+              maxWidth: 360,
               marginLeft: 'auto',
               marginRight: 'auto',
             }}
           >
-            Neuro-physiological analysis meets strategic play.
+            Train your chess under neural observation.
             <br />
-            Monitor your mind while you move.
+            Track how stress, focus, and calm shape every move you make.
           </p>
 
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center' }}>
-            <button type="button" onClick={() => navigate('/play')} style={{ minWidth: 120, padding: '6px 24px' }}>
+            <button type="button" onClick={() => navigate('/setup')} style={{ minWidth: 120, padding: '6px 24px' }}>
               ▶ Launch
             </button>
             <button type="button" onClick={() => navigate('/settings')} style={{ minWidth: 120, padding: '6px 24px' }}>
