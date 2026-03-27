@@ -11,11 +11,6 @@ export function HomePage() {
       <div className="window" style={{ width: 460 }}>
         <div className="title-bar">
           <div className="title-bar-text">Chess Analyzer v1.0</div>
-          <div className="title-bar-controls">
-            <button type="button" aria-label="Minimize" />
-            <button type="button" aria-label="Maximize" />
-            <button type="button" aria-label="Close" />
-          </div>
         </div>
         <div className="window-body" style={{ padding: 32, textAlign: 'center' }}>
           <div
@@ -61,8 +56,6 @@ export function HomePage() {
               marginRight: 'auto',
             }}
           >
-            Composure-tracking chess workstation.
-            <br />
             Neuro-physiological analysis meets strategic play.
             <br />
             Monitor your mind while you move.

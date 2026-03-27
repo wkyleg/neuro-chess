@@ -7,13 +7,13 @@ interface NeuroProviderProps {
 }
 
 export function NeuroProvider({ children }: NeuroProviderProps) {
-  const init = useNeuroStore((s) => s.init);
-  const destroy = useNeuroStore((s) => s.destroy);
-
   useEffect(() => {
+    const { init } = useNeuroStore.getState();
     init();
-    return () => destroy();
-  }, [init, destroy]);
+    return () => {
+      useNeuroStore.getState().destroy();
+    };
+  }, []);
 
   useNeuroLoop();
 

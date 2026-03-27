@@ -3,7 +3,6 @@ import { DeviceConnect } from '../components/DeviceConnect';
 import { useGameStore } from '../lib/gameStore';
 import { useNeuroConnection } from '../neuro/hooks';
 
-const THEMES = ['default', 'marble', 'wood', 'tournament', 'midnight'];
 const DIFFICULTIES: Array<{ value: 'easy' | 'medium' | 'hard'; label: string }> = [
   { value: 'easy', label: 'Easy' },
   { value: 'medium', label: 'Medium' },
@@ -14,9 +13,7 @@ export function SettingsPage() {
   const navigate = useNavigate();
   const { mockEnabled, enableMock, disableMock } = useNeuroConnection();
   const difficulty = useGameStore((s) => s.difficulty);
-  const boardTheme = useGameStore((s) => s.boardTheme);
   const setDifficulty = useGameStore((s) => s.setDifficulty);
-  const setBoardTheme = useGameStore((s) => s.setBoardTheme);
 
   const mono: React.CSSProperties = { fontFamily: "'IBM Plex Mono', monospace" };
 
@@ -25,71 +22,34 @@ export function SettingsPage() {
       {/* Menu */}
       <div
         style={{
-          display: 'flex',
-          gap: 8,
-          padding: '2px 8px',
+          display: 'flex', gap: 8,
+          padding: '4px 12px',
           borderBottom: '1px solid var(--color-border-dark)',
-          fontSize: 12,
+          fontSize: 13,
         }}
       >
-        <button type="button" onClick={() => navigate(-1)} style={{ fontSize: 12 }}>
-          ← Back
-        </button>
-        <button type="button" onClick={() => navigate('/')} style={{ fontSize: 12 }}>
-          Home
-        </button>
+        <button type="button" onClick={() => navigate(-1)} style={{ padding: '4px 16px' }}>← Back</button>
+        <button type="button" onClick={() => navigate('/')} style={{ padding: '4px 16px' }}>Home</button>
       </div>
 
       <div
         style={{
-          flex: 1,
-          overflow: 'auto',
-          padding: 16,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 8,
-          maxWidth: 640,
-          margin: '0 auto',
-          width: '100%',
+          flex: 1, overflow: 'auto', padding: 24,
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          gap: 16, maxWidth: 600, margin: '0 auto', width: '100%',
         }}
       >
-        {/* Board theme */}
-        <div className="window" style={{ width: '100%' }}>
-          <div className="title-bar">
-            <div className="title-bar-text">Board Theme</div>
-          </div>
-          <div className="window-body" style={{ padding: 16 }}>
-            <fieldset>
-              <legend>Select board appearance</legend>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6, padding: '8px 0' }}>
-                {THEMES.map((t) => (
-                  <label key={t} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 12, cursor: 'pointer' }}>
-                    <input
-                      type="radio"
-                      name="theme"
-                      checked={boardTheme === t}
-                      onChange={() => setBoardTheme(t)}
-                    />
-                    <span style={{ textTransform: 'capitalize' }}>{t}</span>
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-          </div>
-        </div>
-
         {/* Difficulty */}
         <div className="window" style={{ width: '100%' }}>
           <div className="title-bar">
             <div className="title-bar-text">Difficulty</div>
           </div>
-          <div className="window-body" style={{ padding: 16 }}>
-            <fieldset>
+          <div className="window-body" style={{ padding: 20 }}>
+            <fieldset style={{ padding: '12px 16px' }}>
               <legend>Computer opponent strength</legend>
-              <div style={{ display: 'flex', gap: 12, padding: '8px 0' }}>
+              <div style={{ display: 'flex', gap: 16, padding: '12px 0' }}>
                 {DIFFICULTIES.map((d) => (
-                  <label key={d.value} style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, cursor: 'pointer' }}>
+                  <label key={d.value} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer', padding: '4px 0' }}>
                     <input
                       type="radio"
                       name="difficulty"
@@ -100,7 +60,7 @@ export function SettingsPage() {
                   </label>
                 ))}
               </div>
-              <p style={{ fontSize: 10, color: '#888', marginTop: 4 }}>
+              <p style={{ fontSize: 11, color: '#888', marginTop: 4 }}>
                 Currently uses random move engine. Stockfish integration coming soon.
               </p>
             </fieldset>
@@ -112,26 +72,16 @@ export function SettingsPage() {
           <div className="title-bar">
             <div className="title-bar-text">Signal Mode</div>
           </div>
-          <div className="window-body" style={{ padding: 16 }}>
-            <fieldset>
+          <div className="window-body" style={{ padding: 20 }}>
+            <fieldset style={{ padding: '12px 16px' }}>
               <legend>Mock / Live signals</legend>
-              <div style={{ display: 'flex', gap: 12, padding: '8px 0' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, cursor: 'pointer' }}>
-                  <input
-                    type="radio"
-                    name="signalMode"
-                    checked={!mockEnabled}
-                    onChange={() => disableMock()}
-                  />
+              <div style={{ display: 'flex', gap: 16, padding: '12px 0' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer', padding: '4px 0' }}>
+                  <input type="radio" name="signalMode" checked={!mockEnabled} onChange={() => disableMock()} />
                   Live (Device)
                 </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, cursor: 'pointer' }}>
-                  <input
-                    type="radio"
-                    name="signalMode"
-                    checked={mockEnabled}
-                    onChange={() => enableMock()}
-                  />
+                <label style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, cursor: 'pointer', padding: '4px 0' }}>
+                  <input type="radio" name="signalMode" checked={mockEnabled} onChange={() => enableMock()} />
                   Simulated (Mock)
                 </label>
               </div>
@@ -144,7 +94,7 @@ export function SettingsPage() {
           <div className="title-bar">
             <div className="title-bar-text">Device Connection</div>
           </div>
-          <div className="window-body" style={{ padding: 16 }}>
+          <div className="window-body" style={{ padding: 20 }}>
             <DeviceConnect showSkip={false} />
           </div>
         </div>
