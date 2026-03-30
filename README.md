@@ -8,6 +8,14 @@
 
 A chess trainer that tracks your neural and physiological state in real time. Play against Stockfish 16 while EEG and webcam sensors measure how stress, focus, and calm shape every move you make. Post-game analysis correlates your brain state with chess performance across 10+ detailed charts.
 
+## Gameplay preview
+
+| Desktop | Mobile |
+| --- | --- |
+| ![Neuro Chess desktop gameplay](docs/store-assets/preview-desktop-01-1200w.webp) | ![Neuro Chess mobile](docs/store-assets/preview-mobile-01-800w.webp) |
+
+More sizes and store metadata: [`docs/store-assets/`](docs/store-assets/).
+
 ## Features
 
 - **Stockfish 16 engine** -- adjustable difficulty (Easy / Medium / Hard) running via WASM Web Worker
