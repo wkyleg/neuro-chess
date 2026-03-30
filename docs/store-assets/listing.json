@@ -1,0 +1,16 @@
+{
+  "name": "Neuro Chess",
+  "symbol": "NCHESS",
+  "category": "GAMES",
+  "tags": ["chess", "EEG", "Stockfish", "neurotech", "strategy"],
+  "description": "Play chess against Stockfish 16 while your brain and body are monitored in real time. EEG headbands and webcam heart rate tracking reveal how stress, focus, and composure affect every move. Deep post-game analysis ties your neural state to your chess performance.",
+  "longDescription": "Neuro Chess puts a Stockfish 16 engine on one side of the board and your nervous system on the other.\n\nPick a difficulty (Easy, Medium, Hard) and play a standard chess game. While you think, the app tracks your EEG band powers (delta, theta, alpha, beta, gamma), calmness state, heart rate, HRV, respiration rate, and arousal level through either an EEG headband or your webcam.\n\nThe live HUD displays all of this during play. You can watch your alpha power dip when you spot a threat or see your heart rate climb during a complicated tactical sequence.\n\nAfter the game, the analysis page shows 10+ charts correlating neural data with chess performance. Calm per move, EEG band timelines, heart rate overlaid with material balance, thinking time per move, and more. You can see exactly which positions stressed you out and which ones you handled with composure.\n\nA built-in classical music player offers 10 public domain piano recordings (Bach, Beethoven, Chopin, Debussy, Satie, Prokofiev) so you can set the mood.\n\nThe interface uses a Cold War bunker aesthetic with a Windows 98 chrome styling that feels like a declassified intelligence terminal. The chess engine runs entirely in the browser via WebAssembly.\n\nConnect a Muse headband via Bluetooth for full EEG data, or use your webcam for heart rate. Both are optional. You can play standard chess without any sensors at all.",
+  "purchaseDescription": "Premium chess training content:\n\n- Grandmaster Training: Structured lesson sequences with curated positions that target specific cognitive weaknesses revealed by your neural data\n- Opening Lab: Practice openings with neural feedback showing which lines cause you the most stress\n- Endgame Drills: Timed endgame puzzles with composure scoring\n- Tournament Mode: Rated games with neural performance rankings and historical tracking\n- Study Partners: Asynchronous correspondence games with full neural replay for both players",
+  "tokenomicsDescription": "Token details and allocation specifics are being finalized. More information coming soon.",
+  "socialLinks": {
+    "twitter": "https://x.com/Elata_Bio",
+    "discord": "https://discord.gg/8UdPKztc6u",
+    "github": "https://github.com/wkyleg/neuro-chess",
+    "website": "https://elata.bio"
+  }
+}
